@@ -1,7 +1,7 @@
 /**********************************
  * IFPB - Curso Superior de Tec. em Sist. para Internet
  * Persistencia de objetos
- * Prof. Fausto Maranh�o Ayres
+ * Prof. Fausto Maranh�o Ayres
  **********************************/
 package appswing;
 
@@ -356,7 +356,8 @@ public class TelaJogo {
 	public void listagemPorData () {
 		try{
 			String data= textField_4.getText();
-			List<Jogo> lista = Fachada.listarJogos(data);
+			//Ajustando essa lista, antes estava chamando a função listarJogos
+			List<Jogo> lista = Fachada.listarJogosPorData(data);
 
 			//model contem todas as linhas e colunas da tabela
 			DefaultTableModel model = new DefaultTableModel();
