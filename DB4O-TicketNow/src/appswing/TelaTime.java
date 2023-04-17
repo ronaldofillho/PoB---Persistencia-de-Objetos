@@ -11,14 +11,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.text.ParseException;
 import java.util.List;
 
 import javax.swing.JButton;
-import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -26,12 +23,9 @@ import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.text.MaskFormatter;
 
-import modelo.Ingresso;
-import modelo.IngressoGrupo;
-import modelo.IngressoIndividual;
 import modelo.Jogo;
+import modelo.Time;
 import regras_negocio.Fachada;
 
 public class TelaTime {
@@ -118,22 +112,19 @@ public class TelaTime {
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 
 
-		button = new JButton("Criar jogo");
+		button = new JButton("Criar time");
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					if(formattedTextField.getText().isEmpty() || 
-							textField_1.getText().isEmpty() ||
-							textField.getText().isEmpty() )
-					{
+					if(textField_1.getText().isEmpty() || textField.getText().isEmpty() ){
 						label.setText("campo vazio");
 						return;
 					}
 
-					String local = textField_1.getText();
-					String nome1 = textField.getText();
-					Jogo jogo = Fachada.criarJogo(data, local, 50000, Double.parseDouble(preco),nome1,nome2);
-					label.setText("jogo criado: "+jogo.getId());
+					String origem = textField_1.getText();
+					String nome = textField.getText();
+					Time time = Fachada.criarTime(nome, origem);
+					label.setText("time criado: " + time.getNome());
 					listagem();
 				}
 				catch(Exception ex) {
@@ -156,12 +147,6 @@ public class TelaTime {
 		lblOrigem.setFont(new Font("Dialog", Font.PLAIN, 12));
 		lblOrigem.setBounds(264, 193, 50, 18);
 		frmTimes.getContentPane().add(lblOrigem);
-
-		try {
-		} 
-		catch (ParseException e1) {
-			label.setText("formato do campo data invalido");
-		}
 
 		textField_1 = new JTextField();
 		textField_1.setFont(new Font("Dialog", Font.PLAIN, 12));
