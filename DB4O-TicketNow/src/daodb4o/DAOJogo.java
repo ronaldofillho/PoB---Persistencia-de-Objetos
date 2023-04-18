@@ -9,17 +9,18 @@ import modelo.Time;
 
 public class DAOJogo extends DAO<Jogo> {
 
-    public Jogo read(Object chave) {
-        int id = (Integer) chave;
-        Query q = manager.query();
-        q.constrain(Jogo.class);
-        q.descend("id").constrain(id);
-        List<Jogo> resultados = q.execute();
-        if (resultados.size() > 0)
-            return resultados.get(0);
-        else
-            return null;
-    }
+	public Jogo read (Object chave){
+
+		int id = (Integer) chave;	//casting para o tipo da chave
+		Query q = manager.query();
+		q.constrain(Jogo.class);
+		q.descend("id").constrain(id);
+		List<Jogo> resultados = q.execute();
+		if (resultados.size()>0)
+			return resultados.get(0);
+		else
+			return null;
+	}
     
     /* -- Consultas -- */
     

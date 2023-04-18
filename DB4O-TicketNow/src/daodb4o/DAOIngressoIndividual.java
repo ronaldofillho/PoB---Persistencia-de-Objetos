@@ -5,17 +5,18 @@ import modelo.IngressoIndividual;
 import modelo.Jogo;
 import modelo.Time;
 public class DAOIngressoIndividual extends DAO<IngressoIndividual> {
-    public IngressoIndividual read(Object chave) {
-        int id = (Integer) chave;
-        Query q = manager.query();
-        q.constrain(IngressoIndividual.class);
-        q.descend("codigo").constrain(id);
-        List<IngressoIndividual> resultados = q.execute();
-        if (resultados.size() > 0)
-            return resultados.get(0);
-        else
-            return null;
-    }
+	public IngressoIndividual read (Object chave){
+
+		String email = (String) chave;	//casting para o tipo da chave
+		Query q = manager.query();
+		q.constrain(IngressoIndividual.class);
+		q.descend("email").constrain(email);
+		List<IngressoIndividual> resultados = q.execute();
+		if (resultados.size()>0)
+			return resultados.get(0);
+		else
+			return null;
+	}
     public List<IngressoIndividual> buscarPorJogo(Jogo jogo) {
         Query q = manager.query();
         q.constrain(IngressoIndividual.class);
