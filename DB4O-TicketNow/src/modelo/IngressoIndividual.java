@@ -1,7 +1,7 @@
 /**********************************
  * IFPB - Curso Superior de Tec. em Sist. para Internet
  * Persistencia de objetos
- * Prof. Fausto Maranhão Ayres
+ * Prof. Fausto Maranhï¿½o Ayres
  **********************************/
 package modelo;
 
