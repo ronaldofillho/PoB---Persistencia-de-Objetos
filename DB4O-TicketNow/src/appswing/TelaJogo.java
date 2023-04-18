@@ -146,8 +146,15 @@ public class TelaJogo {
 					String preco = textField_2.getText();
 					String nome1 = textField.getText();
 					String nome2 = textField_3.getText();
+					
 					Jogo jogo = Fachada.criarJogo(data, local, 50000, Double.parseDouble(preco),nome1,nome2);
+					
 					label.setText("jogo criado: "+jogo.getId());
+					textField_1.setText("");
+					textField.setText("");
+					textField_2.setText("");
+					textField_3.setText("");
+					
 					listagem();
 				}
 				catch(Exception ex) {
