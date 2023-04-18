@@ -17,9 +17,8 @@ public class Jogo {
 	private Time time2;
 	private ArrayList<Ingresso> ingressos = new ArrayList<>();
 
-	public Jogo(String data, String local, int estoque, double preco, int id) {
+	public Jogo(String data, String local, int estoque, double preco) {
 		//id ser� gerado pelo banco;
-		this.id = id;
 		this.data = data;
 		this.local = local;
 		this.estoque = estoque;
@@ -52,7 +51,6 @@ public class Jogo {
 	public int getId() {
 		return id;
 	}
-	
 	public void setId(int id) {
 		this.id = id;
 	}

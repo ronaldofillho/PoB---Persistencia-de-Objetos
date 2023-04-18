@@ -52,7 +52,7 @@ public class Fachada {
 	}
 	public static List<Jogo> listarJogos() {
 		DAO.begin();
-		List<Jogo> listagemDosJogos =  daojogo.readAll();
+		List<Jogo> listagemDosJogos =  daojogo.listarJogos();
 		DAO.commit();
 		return listagemDosJogos;
 	}
@@ -83,9 +83,9 @@ public class Fachada {
 
 	public static Jogo	localizarJogo(int id) {
 		DAO.begin();
-		Jogo idJogo =  daojogo.read(id);
+		Jogo jogo =  daojogo.read(id);
 		DAO.commit();
-		return idJogo;
+		return jogo;
 	}
 
 	public static Usuario criarUsuario(String email, String senha) throws Exception{
@@ -126,7 +126,7 @@ public class Fachada {
 	    }
 	}
 
-	public static Jogo criarJogo(String data, String local, int estoque, double preco, String nomeTime1, String nomeTime2, int id) throws Exception {
+	public static Jogo criarJogo(String data, String local, int estoque, double preco, String nomeTime1, String nomeTime2) throws Exception {
 		DAO.begin();
 
 		// Verifica se a data e o local foram informados
@@ -138,23 +138,32 @@ public class Fachada {
 		if (estoque <= 0 || preco <= 0.0) {
 			throw new Exception("Estoque e/ou preço devem ser maiores que zero.");
 		}
+		
+		//RN4
+		int newId = daojogo.gerarId();
+		
+		// Verifica se os times são diferentes
+		
+		if (nomeTime1.equals(nomeTime2)) {
+			throw new Exception("Um jogo não pode ter dois times iguais.");
+		}
+		
+		if (nomeTime2.equals(nomeTime1)) {
+			throw new Exception("Um jogo não pode ter dois times iguais.");
+		}
 
 		// Localiza os times
-		DAOTime daoTime = new DAOTime();
-		Time time1 = daoTime.read(nomeTime1);
-		Time time2 = daoTime.read(nomeTime2);
+		Time time1 = daotime.read(nomeTime1);
+		Time time2 = daotime.read(nomeTime2);
 
 		if (time1 == null || time2 == null) {
 			throw new Exception("Times inválidos ou inexistentes.");
 		}
 
-		// Verifica se os times são diferentes
-		if (time1.equals(time2)) {
-			throw new Exception("Um jogo não pode ter dois times iguais.");
-		}
-
 		// Cria o jogo
-		Jogo jogo = new Jogo(data, local, estoque, preco, id);
+		Jogo jogo = new Jogo(data, local, estoque, preco);
+		jogo.setId(newId);
+		
 		jogo.setTime1(time1);
 		jogo.setTime2(time2);
 
@@ -163,11 +172,8 @@ public class Fachada {
 		time2.adicionar(jogo);
 
 		// Grava o jogo no banco
-		DAOJogo daoJogo = new DAOJogo();
-		daoJogo.create(jogo);
-
+		daojogo.create(jogo);
 		DAO.commit();
-
 		return jogo;
 	}
 

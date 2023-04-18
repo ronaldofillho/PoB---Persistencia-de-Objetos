@@ -21,8 +21,12 @@ public class DAOJogo extends DAO<Jogo> {
             return null;
     }
     
-    public void setID(Jogo jogo, int id) {
-        jogo.setId(id);
+    /* -- Consultas -- */
+    
+    public List<Jogo> listarJogos() {
+    	Query q = manager.query();
+    	q.constrain(Jogo.class);
+    	return q.execute();
     }
 
     public List<Jogo> buscarPorTime(Time time) {
