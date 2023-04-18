@@ -40,8 +40,6 @@ public class TelaTime {
 	private JLabel label_8;
 	private JLabel lblNome;
 	private JTextField textField;
-	private JButton btnFiltrarPorNome;
-	private JTextField textField_4;
 	private JButton btnSelecionarTime;
 
 
@@ -125,6 +123,8 @@ public class TelaTime {
 					String nome = textField.getText();
 					Time time = Fachada.criarTime(nome, origem);
 					label.setText("time criado: " + time.getNome());
+					textField_1.setText("");
+					textField.setText("");
 					listagem();
 				}
 				catch(Exception ex) {
@@ -135,6 +135,26 @@ public class TelaTime {
 		button.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		button.setBounds(517, 191, 95, 23);
 		frmTimes.getContentPane().add(button);
+		
+		btnSelecionarTime = new JButton("Apagar time");
+		btnSelecionarTime.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					if (table.getSelectedRow() >= 0) {
+						String nome = (String) table.getValueAt(table.getSelectedRow(), 0);
+						Fachada.apagarTime(nome);
+						label.setText("Time apagado: " + nome);
+						listagem();
+					}
+				}
+				catch(Exception ex) {
+					label.setText(ex.getMessage());
+				}
+			}
+		});
+		btnSelecionarTime.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		btnSelecionarTime.setBounds(723, 174, 147, 23);
+		frmTimes.getContentPane().add(btnSelecionarTime);
 
 		label = new JLabel("");
 		label.setForeground(Color.BLUE);
@@ -179,90 +199,31 @@ public class TelaTime {
 		textField.setColumns(10);
 		textField.setBounds(77, 191, 169, 20);
 		frmTimes.getContentPane().add(textField);
-
-		btnFiltrarPorNome = new JButton("Filtrar por nome:");
-		btnFiltrarPorNome.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				listagemPorData();
-			}
-		});
-		btnFiltrarPorNome.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		btnFiltrarPorNome.setBounds(186, 8, 147, 23);
-		frmTimes.getContentPane().add(btnFiltrarPorNome);
-
-		textField_4 = new JTextField();
-		textField_4.setBounds(343, 11, 86, 20);
-		frmTimes.getContentPane().add(textField_4);
-		textField_4.setColumns(10);
-		
-		btnSelecionarTime = new JButton("Apagar time");
-		btnSelecionarTime.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				//falta implementar
-			}
-		});
-		btnSelecionarTime.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		btnSelecionarTime.setBounds(723, 174, 147, 23);
-		frmTimes.getContentPane().add(btnSelecionarTime);
 	}
 
 	//*****************************
 	public void listagem () {
 		try{
-			List<Jogo> lista = Fachada.listarJogos();
+			List<Time> lista = Fachada.listarTimes();
 
 			//model contem todas as linhas e colunas da tabela
 			DefaultTableModel model = new DefaultTableModel();
 			//colunas
-			model.addColumn("id");
-			model.addColumn("data");
-			model.addColumn("loca");
-			model.addColumn("estoque");
-			model.addColumn("preco");
-			model.addColumn("time1");
-			model.addColumn("time2");
-			model.addColumn("arrecadacao");
+			model.addColumn("nome");
+			model.addColumn("origem");
+			model.addColumn("jogos");
+			
 			//linhas
-			for(Jogo jogo : lista) {
-				model.addRow(new Object[]{jogo.getId()+"", jogo.getData(), jogo.getLocal(), jogo.getEstoque(),jogo.getPreco(),
-						jogo.getTime1().getNome(), jogo.getTime2().getNome(), jogo.obterValorArrecadado()});
+			for(Time time: lista) {
+				model.addRow(new Object[] {
+						time.getNome()+"", time.getOrigem(), time.getJogos()
+				});
 			}
 			table.setModel(model);
-			label_8.setText("resultados: "+lista.size()+ " jogos  - selecione uma linha");
+			label_8.setText("resultados: "+lista.size()+ " times - selecione uma linha");
 		}
 		catch(Exception erro){
 			label.setText(erro.getMessage());
 		}
-	}
-
-	public void listagemPorData () {
-		try{
-			String data= textField_4.getText();
-			//Ajustando essa lista, antes estava chamando a função listarJogos
-			List<Jogo> lista = Fachada.listarJogosPorData(data);
-
-			//model contem todas as linhas e colunas da tabela
-			DefaultTableModel model = new DefaultTableModel();
-			//colunas
-			model.addColumn("id");
-			model.addColumn("data");
-			model.addColumn("loca");
-			model.addColumn("estoque");
-			model.addColumn("preco");
-			model.addColumn("time1");
-			model.addColumn("time2");
-			model.addColumn("arrecadacao");
-			//linhas
-			for(Jogo jogo : lista) {
-				model.addRow(new Object[]{jogo.getId()+"", jogo.getData(), jogo.getLocal(), jogo.getEstoque(),jogo.getPreco(),
-						jogo.getTime1().getNome(), jogo.getTime2().getNome(), jogo.obterValorArrecadado()});
-			}
-			table.setModel(model);
-			label_8.setText("resultados: "+lista.size()+ " jogos  - selecione uma linha");
-		}
-		catch(Exception erro){
-			label.setText(erro.getMessage());
-		}
-
 	}
 }

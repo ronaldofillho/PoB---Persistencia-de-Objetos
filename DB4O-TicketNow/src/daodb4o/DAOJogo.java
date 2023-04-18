@@ -21,6 +21,10 @@ public class DAOJogo extends DAO<Jogo> {
             return null;
     }
     
+    public void setID(Jogo jogo, int id) {
+        jogo.setId(id);
+    }
+
     public List<Jogo> buscarPorTime(Time time) {
         Query q = manager.query();
         q.constrain(Jogo.class);

@@ -49,6 +49,10 @@ public class Time {
 	public void setOrigem(String origem) {
 		this.origem = origem;
 	}
+	
+	public int getJogos() {
+		return jogos.size();
+	}
 
 	@Override
 	public String toString() {

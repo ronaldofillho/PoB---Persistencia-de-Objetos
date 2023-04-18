@@ -126,7 +126,7 @@ public class Fachada {
 	    }
 	}
 
-	public static Jogo criarJogo(String data, String local, int estoque, double preco, String nomeTime1, String nomeTime2) throws Exception {
+	public static Jogo criarJogo(String data, String local, int estoque, double preco, String nomeTime1, String nomeTime2, int id) throws Exception {
 		DAO.begin();
 
 		// Verifica se a data e o local foram informados
@@ -154,7 +154,7 @@ public class Fachada {
 		}
 
 		// Cria o jogo
-		Jogo jogo = new Jogo(data, local, estoque, preco);
+		Jogo jogo = new Jogo(data, local, estoque, preco, id);
 		jogo.setTime1(time1);
 		jogo.setTime2(time2);
 
@@ -267,12 +267,12 @@ public class Fachada {
 		DAO.commit();
 	}
 
-	public static void apagarTime(int id) throws Exception {
+	public static void apagarTime(String nome) throws Exception {
 		DAO.begin();
 		DAOJogo daoJogo = new DAOJogo();
 		DAOTime daoTime = new DAOTime();
 
-		Time time = daoTime.read(id);
+		Time time = daoTime.read(nome);
 		if (time == null) {
 			throw new Exception("Time não encontrado.");
 		}

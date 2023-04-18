@@ -33,4 +33,18 @@ public class DAOTime extends DAO<Time> {
         q.descend("jogos").constrain(minimo).greater().and(q.descend("jogos").constrain(maximo).smaller());
         return q.execute();
     }
+    
+    public int getNumJogos(String nome) {
+        Query q = manager.query();
+        q.constrain(Time.class);
+        q.descend("nome").constrain(nome);
+        List<Time> resultados = q.execute();
+        if (resultados.size() > 0) {
+            Time time = resultados.get(0);
+            return time.getJogos();
+        } else {
+            return -1; // ou outra indicação de que o time não foi encontrado
+        }
+    }
+
 }
