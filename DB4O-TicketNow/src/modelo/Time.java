@@ -54,6 +54,10 @@ public class Time {
 	public int getJogos() {
 		return jogos.size();
 	}
+	
+	public ArrayList<Jogo> getGames() {
+		return this.jogos;
+	}
 
 	@Override
 	public String toString() {

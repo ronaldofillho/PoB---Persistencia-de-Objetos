@@ -28,12 +28,13 @@ public class DAOTime extends DAO<Time> {
         return q.execute();
     }
 
-    public List<Time> buscarPorParticipacaoEmJogos(int minimo, int maximo) {
+    public List<Time> buscarPorMaximoDeJogos(int maximo) {
         Query q = manager.query();
         q.constrain(Time.class);
-        q.descend("jogos").constrain(minimo).greater().and(q.descend("jogos").constrain(maximo).smaller());
+        q.descend("jogos").constrain(maximo).smaller().equal();
         return q.execute();
     }
+
     
     public int getNumJogos(String nome) {
         Query q = manager.query();
@@ -46,6 +47,14 @@ public class DAOTime extends DAO<Time> {
         } else {
             return -1; // ou outra indicação de que o time não foi encontrado
         }
+    }
+    
+    public List<Time> LocalTeam(String local) {
+        Query q = manager.query();
+        q.constrain(Time.class);
+        q.descend("jogos").descend("local").constrain(local).like();
+        List<Time> resultados = q.execute();
+        return resultados;
     }
 
 }

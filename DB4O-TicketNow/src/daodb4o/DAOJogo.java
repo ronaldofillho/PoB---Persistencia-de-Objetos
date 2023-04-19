@@ -1,5 +1,6 @@
 package daodb4o;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.db4o.query.Query;
@@ -54,4 +55,11 @@ public class DAOJogo extends DAO<Jogo> {
     }
     
     
+    public List<Jogo> jogosDeUmTimeEspecifico(String time) {
+        Query q = manager.query();
+        
+        q.constrain(Jogo.class);
+        q.descend("time1").descend("nome").constrain(time).or(q.descend("time2").descend("nome").constrain(time));
+        return q.execute();
+    }
 }

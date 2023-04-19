@@ -1,8 +1,8 @@
-/**********************************
+/************
  * IFPB - Curso Superior de Tec. em Sist. para Internet
  * Persistencia de objetos
- * Prof. Fausto Maranh�o Ayres
- **********************************/
+ * Prof. Fausto Maranh o Ayres
+ ************/
 
 package appswing;
 
@@ -13,6 +13,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -167,14 +168,14 @@ public class TelaIngresso {
 		button_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try{
-					if (table.getSelectedRow() >= 0){
-						String codigo = (String) table.getValueAt( table.getSelectedRow(), 1);
-						Fachada.apagarIngresso(Integer.parseInt(codigo));
-						label.setText("cancelou ingresso " +codigo);
+					if (table.getSelectedRow() >= 0){				
+						Integer codigo = (Integer) table.getValueAt(table.getSelectedRow(),1);
+						Fachada.apagarIngresso(codigo);
+						label.setText("Cancelou o ingresso " + Integer.toString(codigo));
 						listagem();
 					}
 					else
-						label.setText("ingresso nao selecionado");
+						label.setText("Ingresso nao selecionado");
 				}
 				catch(Exception ex) {
 					label.setText(ex.getMessage());
@@ -187,33 +188,36 @@ public class TelaIngresso {
 
 		button_3 = new JButton("Criar ingresso grupo");
 		button_3.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				try {
-					String id="";
-					ArrayList<Integer> lista = new ArrayList<>();
-					//leitura dos ids
-					do{
-						try {
-							id = JOptionPane.showInputDialog("digite o id do jogo ou <enter>");
-							lista.add(Integer.parseInt(id));
-						}
-						catch(NumberFormatException ex) {
-							label.setText("id nao numerico:");
-						}
-					}while(id.isEmpty());
+		    public void actionPerformed(ActionEvent e) {
+		        try {
+		            String id="";
+		            ArrayList<Integer> lista = new ArrayList<>();
+		            //leitura dos ids
+		            do{
+		                try {
+		                    id = JOptionPane.showInputDialog("Digite os códigos dos jogos separados por vírgulas:");
+		                    String[] ids = id.split("\\s*,\\s*"); // Dividir a entrada em substrings separadas por vírgulas, com ou sem espaços ao redor
+		                    for (String gameId : ids) {
+		                        lista.add(Integer.parseInt(gameId));
+		                    }
+		                } catch(NumberFormatException ex) {
+		                    label.setText("Código não numérico: " + id);
+		                }
+		            } while(id.isEmpty());
 
-					//converter o arraylist num array
-					int[] array = lista.stream().mapToInt(Integer::intValue).toArray();
-					IngressoGrupo ingresso = Fachada.criarIngressoGrupo(array);
-					label_3.setText("Codigo:" + ingresso.getCodigo());
-					label_2.setText("Jogos:" + array);
-					label.setText("ingresso criado: ");
-					listagem();
-				}catch(Exception ex) {
-					label.setText(ex.getMessage());
-				}
-			}
+		            //converter o arraylist num array
+		            int[] array = lista.stream().mapToInt(Integer::intValue).toArray();
+		            IngressoGrupo ingresso = Fachada.criarIngressoGrupo(array);
+		            label_3.setText("Código:" + ingresso.getCodigo());
+		            label_2.setText("Jogos:" + Arrays.toString(array)); // atualizar a exibição dos ids dos jogos na label
+		            label.setText("Ingresso criado:");
+		            listagem();
+		        } catch(Exception ex) {
+		            label.setText(ex.getMessage());
+		        }
+		    }
 		});
+
 		button_3.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		button_3.setBounds(21, 272, 201, 23);
 		frame.getContentPane().add(button_3);
@@ -230,7 +234,7 @@ public class TelaIngresso {
 			model.addColumn("tipo");
 			model.addColumn("codigo");
 			model.addColumn("valor");
-			model.addColumn("jogos");
+			model.addColumn("jogo (ID)");
 
 			//linhas
 			String texto;
