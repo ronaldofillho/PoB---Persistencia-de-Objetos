@@ -6,10 +6,9 @@
 
 package modelo;
 
-@Entity
+//@Entity
 public abstract class Ingresso  {
-
-    @id
+    //@Id
     protected int codigo;
     protected int estoque;
     

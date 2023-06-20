@@ -5,7 +5,7 @@
  **********************************/
 package modelo;
 
-@Entity
+//@Entity
 public class IngressoIndividual extends Ingresso {
 	private Jogo jogo;
 	

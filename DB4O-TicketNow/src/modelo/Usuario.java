@@ -1,8 +1,8 @@
 package modelo;
 
-@Entity
+//@Entity
 public class Usuario {
-	@id
+	//@Id
 	private String email;
 	private String senha;
 	

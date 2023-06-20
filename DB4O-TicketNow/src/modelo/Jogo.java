@@ -7,9 +7,9 @@ package modelo;
 
 import java.util.ArrayList;
 
-@Entity
+//@Entity
 public class Jogo {
-	@id
+	//@Id
 	private int id;
 	private String data;
 	private String local;
