@@ -8,7 +8,9 @@ package modelo;
 
 import java.util.ArrayList;
 
+@Entity
 public class Time {
+	@id
 	private String nome;
 	private String origem;
 	private ArrayList<Jogo> jogos = new ArrayList<>();

@@ -1,6 +1,8 @@
 package modelo;
 
+@Entity
 public class Usuario {
+	@id
 	private String email;
 	private String senha;
 	

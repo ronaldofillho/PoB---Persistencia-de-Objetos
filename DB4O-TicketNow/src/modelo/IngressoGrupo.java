@@ -7,6 +7,7 @@ package modelo;
 
 import java.util.ArrayList;
 
+@Entity
 public class IngressoGrupo extends Ingresso {
 	
 	private ArrayList<Jogo> jogos = new ArrayList<>();
