@@ -1,172 +1,91 @@
-
-    /**********************************
-     * IFPB - Curso Superior de Tec. em Sist. para Internet
-     * POB - Persistencia de Objetos
-     * Prof. Fausto Ayres
-     *
-     */
-
+/**********************************
+ * IFPB - Curso Superior de Tec. em Sist. para Internet
+ * POB - Persistencia de Objetos
+ * Prof. Fausto Ayres
+ *
+ */
 package dao;
 
-import com.db4o.Db4oEmbedded;
-import com.db4o.ObjectContainer;
-import com.db4o.config.EmbeddedConfiguration;
-import com.db4o.cs.Db4oClientServer;
-import com.db4o.cs.config.ClientConfiguration;
+import java.util.Properties;
 
-import modelo.Ingresso;
-import modelo.IngressoGrupo;
-import modelo.IngressoIndividual;
-import modelo.Jogo;
-import modelo.Time;
-import modelo.Usuario;
+import dao.DAO;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Persistence;
 
 public class Util {
-        private static ObjectContainer manager=null;
-        private static int contador; //contador de pedidos de conexao
+	private static EntityManager manager;
+	private static EntityManagerFactory factory;
+	//utiliza as configuracoes do log4j.properties
+	protected static final Log logger = LogFactory.getLog(DAO.class);
 
-        public static ObjectContainer conectarDb4oLocal(){
-            contador++;
-            if (manager != null)
-                return manager; //ja tem uma conexao
+	public static EntityManager conectarBanco(){
+		if(manager == null) {
+			try {
+				// ler dados do arquivo dados.properties
+				Properties dados = new Properties();
+				logger.info("Util.conectarBanco - lendo arquivo dados.properties: ");
+				dados.load(DAO.class.getResourceAsStream("/daojpa/dados.properties"));  //dentro de src
 
-            System.out.println(contador);
+				String provedor = dados.getProperty("provedor") ;
+				String sgbd = dados.getProperty("sgbd");
+				String ip = dados.getProperty("ip");
+				String banco = dados.getProperty("banco");
+				String cachemode = dados.getProperty("cachemode");
 
-//---------------------------------------------------------------
-//configurar, criar e conectar banco local (na pasta do projeto
-//---------------------------------------------------------------
+				logger.info("provedor => "+ provedor);
+				logger.info("sgbd => "+ sgbd);
+				logger.info("ip => "+ ip);
+				logger.info("banco => "+ banco);
+				logger.info("cachemode => "+ cachemode);
 
-            EmbeddedConfiguration config =  Db4oEmbedded.newConfiguration();
-            config.common().messageLevel(0);  // mensagens na tela 0(desliga),1,2,3...
+				// reconfigurar algumas propriedades do persistence.xml
+				Properties configuracoes = new Properties();
+				if(sgbd.equals("postgresql")) {
+					logger.info("configurando postgresql");
+					configuracoes.setProperty("jakarta.persistence.jdbc.driver",  "org.postgresql.Driver" );
+					configuracoes.setProperty("jakarta.persistence.jdbc.url", "jdbc:postgresql://"+ip+":5432/"+banco);
+					configuracoes.setProperty("jakarta.persistence.jdbc.user", "postgres");
+					configuracoes.setProperty("jakarta.persistence.jdbc.password", "ifpb");
+					configuracoes.setProperty("jakarta.persistence.sharedCache.mode", cachemode);
+					if(provedor.equals("hibernate")) {
+						configuracoes.setProperty("hibernate.dialect",  "org.hibernate.dialect.PostgreSQLDialect" );
+					}
+				}
+				if(sgbd.equals("mysql")) {
+					logger.info("configurando mysql");
+					configuracoes.setProperty("jakarta.persistence.jdbc.driver",  "com.mysql.cj.jdbc.Driver" );
+					configuracoes.setProperty("jakarta.persistence.jdbc.url", "jdbc:mysql://"+ip+":3306/"+banco+"?createDatabaseIfNotExist=true");
+					configuracoes.setProperty("jakarta.persistence.jdbc.user", "root");
+					configuracoes.setProperty("jakarta.persistence.jdbc.password", "");
+					configuracoes.setProperty("jakarta.persistence.sharedCache.mode", cachemode);
+					if(provedor.equals("hibernate")) {
+						configuracoes.setProperty("hibernate.dialect",  "org.hibernate.dialect.MySQLDialect" );
+					}
+				}
+				//-----------------------------------------------------------------------------------
+				logger.info("criando manager...");
+				factory = Persistence.createEntityManagerFactory(provedor+"-"+sgbd, configuracoes);
+				manager = factory.createEntityManager();
 
-// habilitar cascata na altera??o, remo??o e leitura
-            
-            config.common().objectClass(Ingresso.class).cascadeOnDelete(false);;
-    		config.common().objectClass(Ingresso.class).cascadeOnUpdate(true);;
-    		config.common().objectClass(Ingresso.class).cascadeOnActivate(true);
+			}
+			catch (Exception e) {
+				logger.info("Util - problema de configuracao: "+ e.getMessage());
+				System.exit(0);
+			}
+		}
+		return manager;
+	}
 
-    		//---------------------------------------------------------------------   		
-    		
-            config.common().objectClass(IngressoGrupo.class).cascadeOnDelete(false);
-            config.common().objectClass(IngressoGrupo.class).cascadeOnUpdate(true);
-            config.common().objectClass(IngressoGrupo.class).cascadeOnActivate(true);
-
-
-//---------------------------------------------------------------------
-
-            config.common().objectClass(IngressoIndividual.class).cascadeOnDelete(false);
-            config.common().objectClass(IngressoIndividual.class).cascadeOnUpdate(true);
-            config.common().objectClass(IngressoIndividual.class).cascadeOnActivate(true);
-//-----------------------------------------------------------------------
-
-
-            config.common().objectClass(Jogo.class).cascadeOnDelete(false);
-            config.common().objectClass(Jogo.class).cascadeOnUpdate(true);;
-            config.common().objectClass(Jogo.class).cascadeOnActivate(true);
-
-// ---------------------------------------------------------------------
-            config.common().objectClass(Time.class).cascadeOnDelete(false);
-            config.common().objectClass(Time.class).cascadeOnUpdate(true);;
-            config.common().objectClass(Time.class).cascadeOnActivate(true);
-
-// --------------------------------------------------------------------
-
-            config.common().objectClass(Usuario.class).cascadeOnDelete(false);
-            config.common().objectClass(Usuario.class).cascadeOnUpdate(true);
-            config.common().objectClass(Usuario.class).cascadeOnActivate(true);
-
-//------------------------------------------------------------------
-
-// criar indices (opcional) sobre campos de busca
-            config.common().objectClass(IngressoIndividual.class).objectField("codigo").indexed(true);
-            config.common().objectClass(IngressoGrupo.class).objectField("codigo").indexed(true);
-            config.common().objectClass(Jogo.class).objectField("id").indexed(true);
-            config.common().objectClass(Time.class).objectField("nome").indexed(true);
-            config.common().objectClass(Usuario.class).objectField("email").indexed(true);
-
-
-// nivel de profundidade do grafo para leitura e atualiza??o
-            config.common().objectClass(Ingresso.class).updateDepth(5);
-    		config.common().objectClass(Ingresso.class).minimumActivationDepth(5);
-    		config.common().objectClass(IngressoGrupo.class).updateDepth(5);
-    		config.common().objectClass(IngressoGrupo.class).minimumActivationDepth(5);
-    		config.common().objectClass(IngressoIndividual.class).updateDepth(5);
-    		config.common().objectClass(IngressoIndividual.class).minimumActivationDepth(5);
-    		config.common().objectClass(Jogo.class).updateDepth(5);
-    		config.common().objectClass(Jogo.class).minimumActivationDepth(5);
-    		config.common().objectClass(Time.class).updateDepth(5);
-    		config.common().objectClass(Time.class).minimumActivationDepth(5);
-    		config.common().objectClass(Usuario.class).updateDepth(5);
-    		config.common().objectClass(Usuario.class).minimumActivationDepth(5);
-
-//conexao local
-            manager = Db4oEmbedded.openFile(config, "banco.db4o");
-            System.out.println(manager);
-            return manager;
-        }
-        
-        public static ObjectContainer conectarDb4oRemoto(){		
-    		//---------------------------------------
-    		//configurar e conectar/criar banco remoto
-    		//---------------------------------------
-    		ClientConfiguration config = Db4oClientServer.newClientConfiguration( ) ;
-    		config.common().messageLevel(0);   //0,1,2,3,4
-
-    		// habilitar cascata na altera��o, remo��o e leitura
-    		config.common().objectClass(Ingresso.class).cascadeOnDelete(false);;
-    		config.common().objectClass(Ingresso.class).cascadeOnUpdate(true);;
-    		config.common().objectClass(Ingresso.class).cascadeOnActivate(true);
-    		config.common().objectClass(IngressoGrupo.class).cascadeOnDelete(false);;
-    		config.common().objectClass(IngressoGrupo.class).cascadeOnUpdate(true);;
-    		config.common().objectClass(IngressoGrupo.class).cascadeOnActivate(true);
-    		config.common().objectClass(IngressoIndividual.class).cascadeOnDelete(false);;
-    		config.common().objectClass(IngressoIndividual.class).cascadeOnUpdate(true);;
-    		config.common().objectClass(IngressoIndividual.class).cascadeOnActivate(true);
-    		config.common().objectClass(Jogo.class).cascadeOnDelete(false);;
-    		config.common().objectClass(Jogo.class).cascadeOnUpdate(true);;
-    		config.common().objectClass(Jogo.class).cascadeOnActivate(true);
-    		config.common().objectClass(Time.class).cascadeOnDelete(false);;
-    		config.common().objectClass(Time.class).cascadeOnUpdate(true);;
-    		config.common().objectClass(Time.class).cascadeOnActivate(true);
-    		config.common().objectClass(Usuario.class).cascadeOnDelete(false);;
-    		config.common().objectClass(Usuario.class).cascadeOnUpdate(true);;
-    		config.common().objectClass(Usuario.class).cascadeOnActivate(true);
-    		
-    		// criar indices (opcional) sobre campos de busca
-    		
-    		config.common().objectClass(IngressoIndividual.class).objectField("codigo").indexed(true);
-            config.common().objectClass(IngressoGrupo.class).objectField("codigo").indexed(true);
-            config.common().objectClass(Jogo.class).objectField("id").indexed(true);
-            config.common().objectClass(Time.class).objectField("nome").indexed(true);
-            config.common().objectClass(Usuario.class).objectField("email").indexed(true);
-    		
-    		// nivel de profundidade do grafo para leitura e atualiza��o
-    		config.common().objectClass(Ingresso.class).updateDepth(5);
-    		config.common().objectClass(Ingresso.class).minimumActivationDepth(5);
-    		config.common().objectClass(IngressoGrupo.class).updateDepth(5);
-    		config.common().objectClass(IngressoGrupo.class).minimumActivationDepth(5);
-    		config.common().objectClass(IngressoIndividual.class).updateDepth(5);
-    		config.common().objectClass(IngressoIndividual.class).minimumActivationDepth(5);
-    		config.common().objectClass(Jogo.class).updateDepth(5);
-    		config.common().objectClass(Jogo.class).minimumActivationDepth(5);
-    		config.common().objectClass(Time.class).updateDepth(5);
-    		config.common().objectClass(Time.class).minimumActivationDepth(5);
-    		config.common().objectClass(Usuario.class).updateDepth(5);
-    		config.common().objectClass(Usuario.class).minimumActivationDepth(5);
-
-    		//Conex�o remota 
-    		//****************
-    		String ipservidor="";
-    		//ipservidor = "10.0.4.147";		// computador do lab3 (professor)
-    		//ipservidor = "54.163.92.174";		// AWS
-    		manager = Db4oClientServer.openClient(config, ipservidor, 34000,"usuario1","senha1");
-    		return manager;
-    	}
-
-        public static void desconectar() {
-            if (manager != null && contador > 0) {
-                manager.close();
-                manager = null;
-            }
-        }
+	public static void fecharBanco(){
+		if(manager != null && manager.isOpen()) {
+			logger.info("Util.fecharBanco: ");
+			manager.close();
+			factory.close();
+			manager=null;
+		}
+	}
 }

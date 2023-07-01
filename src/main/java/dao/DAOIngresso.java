@@ -1,23 +1,27 @@
 package dao;
 
-import java.util.List;
-
-import com.db4o.query.Query;
-
+import jakarta.persistence.NoResultException;
+import jakarta.persistence.TypedQuery;
 import modelo.Ingresso;
+
+import java.util.List;
 
 public class DAOIngresso extends DAO<Ingresso> {
 
 	public Ingresso read(Object chave) {
-	    Integer codigo = (Integer) chave;
-	    Query q = manager.query();
-	    q.constrain(Ingresso.class);
-	    q.descend("codigo").constrain(codigo);
-	    List<Ingresso> resultados = q.execute();
-	    if (resultados.size() > 0) {
-	        return resultados.get(0);
-	    } else {
-	        return null;
-	    }
+		try {
+			int id = (Integer) chave;
+			TypedQuery<Ingresso> q = manager.createQuery("select i from Ingresso i where i.id = :x", Ingresso.class);
+			q.setParameter("x", id);
+			return q.getSingleResult();
+		} catch (NoResultException e ){
+			return null;
+		}
+	}
+
+	@Override
+	public List<Ingresso> readAll() {
+		TypedQuery<Ingresso> q = manager.createQuery("select i from Ingresso i", Ingresso.class);
+		return q.getResultList();
 	}
 }
