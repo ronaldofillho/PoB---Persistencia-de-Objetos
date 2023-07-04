@@ -12,8 +12,6 @@ import jakarta.persistence.*;
 public abstract class Ingresso  {
     @Id
     protected int codigo;
-    protected int estoque;
-
     public Ingresso() {}
     
     public Ingresso(int codigo) {
@@ -28,13 +26,5 @@ public abstract class Ingresso  {
     
     public void setCodigo(int codigo) {
         this.codigo = codigo;
-    }
-    
-    public int getEstoque() {
-        return estoque;
-    }
-    
-    public void setEstoque(int estoque) {
-        this.estoque = estoque;
     }
 }

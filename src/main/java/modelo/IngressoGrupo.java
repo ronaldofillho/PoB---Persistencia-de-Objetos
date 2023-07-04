@@ -1,8 +1,4 @@
-/**********************************
- * IFPB - Curso Superior de Tec. em Sist. para Internet
- * Persistencia de objetos
- * Prof. Fausto Maranh�o Ayres
- **********************************/
+
 package modelo;
 
 import java.util.ArrayList;
@@ -17,9 +13,6 @@ public class IngressoGrupo extends Ingresso {
 		}
 	)
 	private ArrayList<Jogo> jogos = new ArrayList<Jogo>();
-	private Time time;
-
-
 	public IngressoGrupo() {}
 	public IngressoGrupo(int codigo) {
 		super(codigo);
@@ -40,10 +33,7 @@ public class IngressoGrupo extends Ingresso {
 	public void remover(Jogo j){
 		jogos.remove(j);
 	}
-	
-	public Time getTime() {
-        return this.time;
-    }
+
 	public Jogo localizar(int id){
 		for(Jogo j : jogos){
 			if(j.getId() == id)
@@ -65,6 +55,4 @@ public class IngressoGrupo extends Ingresso {
 		
 		return texto;
 	}
-	
-	
 }

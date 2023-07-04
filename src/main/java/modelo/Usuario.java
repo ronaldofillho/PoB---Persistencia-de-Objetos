@@ -1,5 +1,8 @@
 package modelo;
 
+import java.util.ArrayList;
+import jakarta.persistence.*;
+
 @Entity
 public class Usuario {
 	@Id

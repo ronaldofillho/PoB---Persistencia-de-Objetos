@@ -1,8 +1,4 @@
-/**********************************
- * IFPB - Curso Superior de Tec. em Sist. para Internet
- * Persistencia de objetos
- * Prof. Fausto Maranh�o Ayres
- **********************************/
+
 package modelo;
 
 import java.util.ArrayList;
@@ -31,7 +27,7 @@ public class Jogo {
 	private ArrayList<Ingresso> ingressos = new ArrayList<>();
 
 	public Jogo(String data, String local, int estoque, double preco) {
-		//id ser� gerado pelo banco;
+		//id sera gerado pelo banco;
 		this.data = data;
 		this.local = local;
 		this.estoque = estoque;
@@ -120,7 +116,7 @@ public class Jogo {
 	public String toString() {
 
 		String texto = "id=" + id + ", data=" + data + ", local=" + local + ", estoque=" + estoque + ", preco=" + preco
-				+ ", time1=" + time1.getNome() + " x time2=" + time2.getNome();
+				+ ", time1=" + this.getTime1().getNome() + " x time2=" + this.getTime2().getNome();
 
 		texto += "\ningressos:";
 		for(Ingresso i : ingressos)

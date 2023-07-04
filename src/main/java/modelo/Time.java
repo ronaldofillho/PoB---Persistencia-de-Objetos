@@ -1,8 +1,3 @@
-/************
- * IFPB - Curso Superior de Tec. em Sist. para Internet
- * Persistencia de objetos
- * Prof. Fausto Maranh o Ayres
- ************/
 
 package modelo;
 
@@ -28,6 +23,8 @@ public class Time {
 		this.nome = nome;
 		this.origem = origem;
 	}
+
+	public Time() {}
 
 	public double obterValorArrecadado() {
 		double soma=0;

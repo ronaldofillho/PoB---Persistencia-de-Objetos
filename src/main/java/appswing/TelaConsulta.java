@@ -96,8 +96,8 @@ public class TelaConsulta {
 					switch (index) {
 					case 0: //Verifica as datas dos jogos de um time, local e seu adversário
 						try {
-							String nomeTime = JOptionPane.showInputDialog("Digite o Nome do Time:");
-							ArrayList<Jogo>jogos = Fachada.listarJogosDoTime(nomeTime);
+							String nomeTime = JOptionPane.showInputDialog("Digite o Local:");
+							List<Time> times = Fachada.listarTimesQueJogaramNoLocal()
 							
 							//model contem todas as linhas e colunas da tabela
 							DefaultTableModel model = new DefaultTableModel();
@@ -122,7 +122,7 @@ public class TelaConsulta {
 						case 1: //verifica quantidade de ingressos totais disponíveis por time
 							try {
 								String nomeTime = JOptionPane.showInputDialog("Digite o Nome do Time:");
-								ArrayList<Jogo>jogos = Fachada.estoqueGeralDoTime(nomeTime);
+								ArrayList<Jogo>jogos = Fachada.estoqueIngressosDoTime(nomeTime);
 								//model contem todas as linhas e colunas da tabela
 								DefaultTableModel model = new DefaultTableModel();
 								//colunas
@@ -168,7 +168,7 @@ public class TelaConsulta {
 						case 3: //Verificar times que jogaram em um local
 							try {
 								String nomeLocal = JOptionPane.showInputDialog("Digite o Nome do Local:");
-								List<Time> times = Fachada.timesQueJogaramEmUmLocal(nomeLocal);
+								List<Time> times = Fachada.listarTimesQueJogaramNoLocal(nomeLocal);
 								
 								DefaultTableModel model = new DefaultTableModel();
 								

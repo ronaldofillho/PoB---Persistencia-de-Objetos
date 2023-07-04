@@ -1,10 +1,8 @@
-/**********************************
- * IFPB - Curso Superior de Tec. em Sist. para Internet
- * Persistencia de objetos
- * Prof. Fausto Maranh�o Ayres
- **********************************/
+
 package modelo;
 import jakarta.persistence.*;
+
+import java.util.ArrayList;
 
 @Entity
 public class IngressoIndividual extends Ingresso {
@@ -12,8 +10,7 @@ public class IngressoIndividual extends Ingresso {
 		cascade = {
 			CascadeType.PERSIST,
 			CascadeType.MERGE
-		}
-	)
+		})
 	private ArrayList<Jogo> jogos = new ArrayList<Jogo>();
 
 	public IngressoIndividual() {}
@@ -22,21 +19,21 @@ public class IngressoIndividual extends Ingresso {
 	}
 
 	public double calcularValor() {
-		return 1.2 * jogo.getPreco();
+		return 1.2 * jogos.get(0).getPreco();
 	}
 
 	public Jogo getJogo() {
-		return jogo;
+		return jogos.get(0);
 	}
 
 	public void setJogo(Jogo jogo) {
-		this.jogo = jogo;
-		jogo.setEstoque(jogo.getEstoque() - 1 );
+		this.jogos.add(jogo);
+		jogo.setEstoque(jogo.getEstoque() -1);
 	}
 
 	@Override
 	public String toString() {
-		return "codigo=" + codigo + ", jogo=" + jogo.getId();
+		return "codigo=" + this.getCodigo() + ", jogo=" + this.getJogo().getId();
 	}
 
 }

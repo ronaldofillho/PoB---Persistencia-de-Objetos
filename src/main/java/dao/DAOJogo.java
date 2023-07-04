@@ -2,6 +2,7 @@ package dao;
 
 import modelo.Jogo;
 
+import java.util.ArrayList;
 import java.util.List;
 import jakarta.persistence.TypedQuery;
 
@@ -38,4 +39,9 @@ public class DAOJogo extends DAO<Jogo> {
         return q.getResultList();
     }
 
+    @Override
+    public List<Jogo> readAll() {
+        return super.readAll();
+        //função readAll herdada pelo DAO original
+    }
 }
