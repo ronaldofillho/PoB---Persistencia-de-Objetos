@@ -94,113 +94,24 @@ public class TelaConsulta {
 				try {
 					int index = comboBox.getSelectedIndex();
 					switch (index) {
-					case 0: //Verifica as datas dos jogos de um time, local e seu adversário
-						try {
-							String nomeTime = JOptionPane.showInputDialog("Digite o Local:");
-							List<Time> times = Fachada.listarTimesQueJogaramNoLocal()
-							
-							//model contem todas as linhas e colunas da tabela
-							DefaultTableModel model = new DefaultTableModel();
-							//colunas
-							model.addColumn("data");
-							model.addColumn("local");
-							model.addColumn("time adversario");
-							//linhas
-							for(Jogo jogo : jogos) {
-								if(nomeTime.equals(jogo.getTime1().getNome()))
-									model.addRow(new Object[]{jogo.getData(),jogo.getLocal(),jogo.getTime2().getNome()});
-								else
-									model.addRow(new Object[]{jogo.getData(),jogo.getLocal(),jogo.getTime1().getNome()});
-							}
-							table.setModel(model);
-							
-						}catch(Exception ex) {
-							labelMessage.setText(ex.getMessage());
-						}
-						break;
-							
-						case 1: //verifica quantidade de ingressos totais disponíveis por time
-							try {
-								String nomeTime = JOptionPane.showInputDialog("Digite o Nome do Time:");
-								ArrayList<Jogo>jogos = Fachada.estoqueIngressosDoTime(nomeTime);
-								//model contem todas as linhas e colunas da tabela
-								DefaultTableModel model = new DefaultTableModel();
-								//colunas
-								model.addColumn("Estoque Disponível");
-								model.addColumn("Data");
-								model.addColumn("Local");
-								model.addColumn("Time Adversario");
-								//linhas
-								for(Jogo jogo : jogos) {
-									if(nomeTime.equals(jogo.getTime1().getNome())) {
-										model.addRow(new Object[]{jogo.getEstoque() ,jogo.getData(),jogo.getLocal(),jogo.getTime2().getNome()});
-									}
-									else {
-										model.addRow(new Object[]{jogo.getEstoque() ,jogo.getData(),jogo.getLocal(),jogo.getTime1().getNome()});
-									}
-								}
-								table.setModel(model);
-								
-							}catch(Exception ex) {
-								labelMessage.setText(ex.getMessage());
-							}
-							break;
-						case 2: // verifica quais jogos de um time específico 
-							try {
-								String nomeTime = JOptionPane.showInputDialog("Digite o Nome do Time:");
-								List<Jogo> jogos = Fachada.jogosDeUmTimeEspecifico(nomeTime);
-								
-								DefaultTableModel model = new DefaultTableModel();
-								
-								model.addColumn("Local");
-								model.addColumn("Preco");
-								model.addColumn("Disputa");
-								
-								for (Jogo jogo: jogos) {
-									model.addRow(new Object[] {jogo.getLocal(), jogo.getPreco(), jogo.getTime1().getNome() + " X " + jogo.getTime2().getNome()});
-								}
-								table.setModel(model);
-								
-							}catch(Exception ex) {
-								labelMessage.setText(ex.getMessage());
-							}
-							break;
-						case 3: //Verificar times que jogaram em um local
+						case 0: //Verificar times que jogaram em um local
 							try {
 								String nomeLocal = JOptionPane.showInputDialog("Digite o Nome do Local:");
 								List<Time> times = Fachada.listarTimesQueJogaramNoLocal(nomeLocal);
-								
+
 								DefaultTableModel model = new DefaultTableModel();
-								
+
 								model.addColumn("Time");
 								model.addColumn("Origem");
-								
+
 								for (Time time: times) {
 									model.addRow(new Object[] {time.getNome(), time.getOrigem()});
 								}
 								table.setModel(model);
-								
+
 							}catch(Exception ex) {
 								labelMessage.setText(ex.getMessage());
 							}
-							break;
-						case 4: //Verificar quantidade de ingressos individuais vendidos por time 
-							try {
-								String nomeTime = JOptionPane.showInputDialog("Digite o Nome do Time:");
-								int ingressosVendidos = Fachada.numIndividualTicketsSold(nomeTime);
-								//model contem todas as linhas e colunas da tabela
-								DefaultTableModel model = new DefaultTableModel();
-								//colunas
-								model.addColumn("Quantidade de Ingressos INDIVIDUAIS Vendidos");
-								//linhas
-								model.addRow(new Object[]{ingressosVendidos});
-								table.setModel(model);
-								
-							}catch(Exception ex) {
-								labelMessage.setText(ex.getMessage());
-							}
-							break;
-						default:
 							break;
 					}
 				}
