@@ -6,7 +6,7 @@ import jakarta.persistence.TypedQuery;
 import modelo.Time;
 
 public class DAOTime extends DAO<Time> {
-
+    @Override
 	public Time read (Object chave){
         String nome = (String) chave;
         try {

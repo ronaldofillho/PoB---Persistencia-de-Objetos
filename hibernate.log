@@ -1,0 +1,142 @@
+16:05:26,531  INFO DAO:29 - Util.conectarBanco - lendo arquivo dados.properties: 
+16:05:26,534  INFO DAO:75 - Util - problema de configuracao: inStream parameter is null
+16:15:53,009  INFO DAO:29 - Util.conectarBanco - lendo arquivo dados.properties: 
+16:15:53,012  INFO DAO:38 - provedor => eclipselink
+16:15:53,013  INFO DAO:39 - sgbd => postgresql
+16:15:53,013  INFO DAO:40 - ip => localhost
+16:15:53,013  INFO DAO:41 - banco => TicketNow
+16:15:53,013  INFO DAO:42 - cachemode => null
+16:15:53,013  INFO DAO:47 - configurando postgresql
+16:15:53,017  INFO DAO:75 - Util - problema de configuracao: null
+16:29:08,363  INFO DAO:29 - Util.conectarBanco - lendo arquivo dados.properties: 
+16:29:08,366  INFO DAO:37 - provedor => eclipselink
+16:29:08,366  INFO DAO:38 - sgbd => postgresql
+16:29:08,366  INFO DAO:39 - ip => localhost
+16:29:08,367  INFO DAO:40 - banco => TicketNow
+16:29:08,367  INFO DAO:45 - configurando postgresql
+16:29:08,372  INFO DAO:65 - criando manager...
+16:29:08,428  INFO PersistenceXmlParser:228 - HHH000318: Could not find any META-INF/persistence.xml file in the classpath
+16:29:08,429  INFO DAO:71 - Util - problema de configuracao: No Persistence provider for EntityManager named eclipselink-postgresql
+16:30:44,911  INFO DAO:29 - Util.conectarBanco - lendo arquivo dados.properties: 
+16:30:44,914  INFO DAO:37 - provedor => eclipselink
+16:30:44,914  INFO DAO:38 - sgbd => postgresql
+16:30:44,914  INFO DAO:39 - ip => localhost
+16:30:44,915  INFO DAO:40 - banco => TicketNow
+16:30:44,915  INFO DAO:45 - configurando postgresql
+16:30:44,920  INFO DAO:65 - criando manager...
+16:30:45,895  INFO DAO:80 - Util.fecharBanco: 
+16:34:27,244  INFO DAO:29 - Util.conectarBanco - lendo arquivo dados.properties: 
+16:34:27,247  INFO DAO:37 - provedor => eclipselink
+16:34:27,247  INFO DAO:38 - sgbd => postgresql
+16:34:27,247  INFO DAO:39 - ip => localhost
+16:34:27,248  INFO DAO:40 - banco => TicketNow
+16:34:27,248  INFO DAO:45 - configurando postgresql
+16:34:27,252  INFO DAO:65 - criando manager...
+16:34:28,138  INFO DAO:80 - Util.fecharBanco: 
+16:51:40,325  INFO DAO:29 - Util.conectarBanco - lendo arquivo dados.properties: 
+16:51:40,327  INFO DAO:37 - provedor => eclipselink
+16:51:40,328  INFO DAO:38 - sgbd => postgresql
+16:51:40,328  INFO DAO:39 - ip => localhost
+16:51:40,328  INFO DAO:40 - banco => TicketNow
+16:51:40,328  INFO DAO:45 - configurando postgresql
+16:51:40,333  INFO DAO:65 - criando manager...
+16:51:41,193  INFO DAO:80 - Util.fecharBanco: 
+16:59:24,051  INFO DAO:29 - Util.conectarBanco - lendo arquivo dados.properties: 
+16:59:24,055  INFO DAO:37 - provedor => eclipselink
+16:59:24,055  INFO DAO:38 - sgbd => postgresql
+16:59:24,055  INFO DAO:39 - ip => localhost
+16:59:24,055  INFO DAO:40 - banco => TicketNow
+16:59:24,055  INFO DAO:45 - configurando postgresql
+16:59:24,060  INFO DAO:65 - criando manager...
+16:59:24,771  INFO DAO:71 - Util - problema de configuracao: Exception [EclipseLink-4002] (Eclipse Persistence Services - 4.0.1.v202302241130): org.eclipse.persistence.exceptions.DatabaseException
+Internal Exception: org.postgresql.util.PSQLException: FATAL: database "TicketNow" does not exist
+Error Code: 0
+17:00:16,026  INFO DAO:29 - Util.conectarBanco - lendo arquivo dados.properties: 
+17:00:16,030  INFO DAO:37 - provedor => eclipselink
+17:00:16,030  INFO DAO:38 - sgbd => postgresql
+17:00:16,031  INFO DAO:39 - ip => localhost
+17:00:16,031  INFO DAO:40 - banco => TicketNow
+17:00:16,031  INFO DAO:45 - configurando postgresql
+17:00:16,038  INFO DAO:65 - criando manager...
+17:00:16,731  INFO DAO:71 - Util - problema de configuracao: Exception [EclipseLink-4002] (Eclipse Persistence Services - 4.0.1.v202302241130): org.eclipse.persistence.exceptions.DatabaseException
+Internal Exception: org.postgresql.util.PSQLException: FATAL: database "TicketNow" does not exist
+Error Code: 0
+17:00:47,721  INFO DAO:29 - Util.conectarBanco - lendo arquivo dados.properties: 
+17:00:47,725  INFO DAO:37 - provedor => eclipselink
+17:00:47,725  INFO DAO:38 - sgbd => postgresql
+17:00:47,725  INFO DAO:39 - ip => localhost
+17:00:47,725  INFO DAO:40 - banco => TicketNow
+17:00:47,726  INFO DAO:45 - configurando postgresql
+17:00:47,731  INFO DAO:65 - criando manager...
+17:00:48,610  INFO DAO:80 - Util.fecharBanco: 
+19:33:16,882  INFO DAO:29 - Util.conectarBanco - lendo arquivo dados.properties: 
+19:33:16,886  INFO DAO:37 - provedor => eclipselink
+19:33:16,886  INFO DAO:38 - sgbd => postgresql
+19:33:16,886  INFO DAO:39 - ip => localhost
+19:33:16,886  INFO DAO:40 - banco => TicketNow
+19:33:16,886  INFO DAO:45 - configurando postgresql
+19:33:16,892  INFO DAO:65 - criando manager...
+19:33:17,880  INFO DAO:80 - Util.fecharBanco: 
+19:41:15,960  INFO DAO:29 - Util.conectarBanco - lendo arquivo dados.properties: 
+19:41:15,964  INFO DAO:37 - provedor => eclipselink
+19:41:15,964  INFO DAO:38 - sgbd => postgresql
+19:41:15,964  INFO DAO:39 - ip => localhost
+19:41:15,964  INFO DAO:40 - banco => TicketNow
+19:41:15,964  INFO DAO:45 - configurando postgresql
+19:41:15,969  INFO DAO:65 - criando manager...
+19:41:16,835  INFO DAO:80 - Util.fecharBanco: 
+19:41:56,854  INFO DAO:29 - Util.conectarBanco - lendo arquivo dados.properties: 
+19:41:56,857  INFO DAO:37 - provedor => eclipselink
+19:41:56,857  INFO DAO:38 - sgbd => postgresql
+19:41:56,857  INFO DAO:39 - ip => localhost
+19:41:56,857  INFO DAO:40 - banco => TicketNow
+19:41:56,857  INFO DAO:45 - configurando postgresql
+19:41:56,862  INFO DAO:65 - criando manager...
+19:41:57,728  INFO DAO:80 - Util.fecharBanco: 
+19:45:26,393  INFO DAO:29 - Util.conectarBanco - lendo arquivo dados.properties: 
+19:45:26,397  INFO DAO:37 - provedor => eclipselink
+19:45:26,397  INFO DAO:38 - sgbd => postgresql
+19:45:26,397  INFO DAO:39 - ip => localhost
+19:45:26,397  INFO DAO:40 - banco => TicketNow
+19:45:26,397  INFO DAO:45 - configurando postgresql
+19:45:26,403  INFO DAO:65 - criando manager...
+19:45:27,318  INFO DAO:80 - Util.fecharBanco: 
+19:56:54,705  INFO DAO:29 - Util.conectarBanco - lendo arquivo dados.properties: 
+19:56:54,708  INFO DAO:37 - provedor => eclipselink
+19:56:54,708  INFO DAO:38 - sgbd => postgresql
+19:56:54,708  INFO DAO:39 - ip => localhost
+19:56:54,709  INFO DAO:40 - banco => TicketNow
+19:56:54,709  INFO DAO:45 - configurando postgresql
+19:56:54,715  INFO DAO:65 - criando manager...
+19:56:55,584  INFO DAO:80 - Util.fecharBanco: 
+19:58:25,816  INFO DAO:29 - Util.conectarBanco - lendo arquivo dados.properties: 
+19:58:25,819  INFO DAO:37 - provedor => eclipselink
+19:58:25,819  INFO DAO:38 - sgbd => postgresql
+19:58:25,820  INFO DAO:39 - ip => localhost
+19:58:25,820  INFO DAO:40 - banco => TicketNow
+19:58:25,820  INFO DAO:45 - configurando postgresql
+19:58:25,825  INFO DAO:65 - criando manager...
+19:58:26,697  INFO DAO:80 - Util.fecharBanco: 
+20:00:19,779  INFO DAO:29 - Util.conectarBanco - lendo arquivo dados.properties: 
+20:00:19,781  INFO DAO:37 - provedor => eclipselink
+20:00:19,781  INFO DAO:38 - sgbd => postgresql
+20:00:19,781  INFO DAO:39 - ip => localhost
+20:00:19,782  INFO DAO:40 - banco => TicketNow
+20:00:19,782  INFO DAO:45 - configurando postgresql
+20:00:19,782  INFO DAO:65 - criando manager...
+20:01:15,294  INFO DAO:80 - Util.fecharBanco: 
+20:01:39,450  INFO DAO:29 - Util.conectarBanco - lendo arquivo dados.properties: 
+20:01:39,451  INFO DAO:37 - provedor => eclipselink
+20:01:39,451  INFO DAO:38 - sgbd => postgresql
+20:01:39,451  INFO DAO:39 - ip => localhost
+20:01:39,451  INFO DAO:40 - banco => TicketNow
+20:01:39,451  INFO DAO:45 - configurando postgresql
+20:01:39,451  INFO DAO:65 - criando manager...
+20:02:58,071  INFO DAO:29 - Util.conectarBanco - lendo arquivo dados.properties: 
+20:02:58,074  INFO DAO:37 - provedor => eclipselink
+20:02:58,074  INFO DAO:38 - sgbd => postgresql
+20:02:58,074  INFO DAO:39 - ip => localhost
+20:02:58,074  INFO DAO:40 - banco => TicketNow
+20:02:58,074  INFO DAO:45 - configurando postgresql
+20:02:58,079  INFO DAO:65 - criando manager...
+20:02:58,974  INFO DAO:80 - Util.fecharBanco: 

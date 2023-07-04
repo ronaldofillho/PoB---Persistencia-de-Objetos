@@ -76,7 +76,7 @@ public class Fachada {
 		return ingresso;
 	}
 
-	public static Jogo	localizarJogo(int id) {
+	public static Jogo localizarJogo(int id) {
 		DAO.begin();
 		Jogo jogo =  daojogo.read(id);
 		DAO.commit();
@@ -86,8 +86,10 @@ public class Fachada {
 	public static Usuario criarUsuario(String email, String senha) throws Exception{
 		DAO.begin(); 
 		Usuario usu = daousuario.read(email);
-		if (usu!=null)
+		if (usu!=null) {
+			DAO.rollback();
 			throw new Exception("Usuario ja cadastrado:" + email);
+		}
 		usu = new Usuario(email, senha);
 
 		daousuario.create(usu);
@@ -109,13 +111,26 @@ public class Fachada {
 
 	public static Time criarTime(String nome, String origem) throws Exception {
 		DAO.begin();
-		if(daotime.read(nome) == null) {
-			Time time = new Time(nome, origem);
-			daotime.create(time);
-			DAO.commit();
-			return time;
+		if(nome.trim().equals("")) {
+			throw new Exception("Nome do time está vazio");
 		}
-		throw new Exception("Time já existente, cadastre outro");
+
+		if(origem.trim().equals("")) {
+			throw new Exception("Origem está vazia");
+		}
+
+		Time timeTemp = daotime.read(nome);
+
+		if(timeTemp != null) {
+			DAO.rollback();
+			throw new Exception("Nome do time já existente.");
+		}
+		//Criação do time
+		Time time = new Time(nome, origem);
+		//Salvar no banco
+		daotime.create(time);
+		DAO.commit();
+		return time;
 	}
 
 
@@ -292,7 +307,7 @@ public class Fachada {
 			throw new Exception("Este nome não pertence a um time cadastrado.");
 		}
 
-		if(time.getGames().size() > 0) {
+		if(time.getJogos().size() > 0) {
 			throw new Exception("Este time possui jogos vinculados");
 		}
 
@@ -368,7 +383,7 @@ public class Fachada {
 			List<Jogo> jogosDoTime = daojogo.listarJogosDeUmTime(nomeTime);
 			int somaIng = 0;
 			for(Jogo jogo : jogosDoTime){
-				ArrayList<Ingresso> ingressosDoJogo = jogo.getIngressos();
+				List<Ingresso> ingressosDoJogo = jogo.getIngressos();
 				for(Ingresso ingresso : ingressosDoJogo){
 					if (ingresso instanceof IngressoIndividual){
 						somaIng++;

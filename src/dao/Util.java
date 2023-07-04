@@ -8,7 +8,6 @@ package dao;
 
 import java.util.Properties;
 
-import dao.DAO;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -28,19 +27,17 @@ public class Util {
 				// ler dados do arquivo dados.properties
 				Properties dados = new Properties();
 				logger.info("Util.conectarBanco - lendo arquivo dados.properties: ");
-				dados.load(DAO.class.getResourceAsStream("/daojpa/dados.properties"));  //dentro de src
+				dados.load(DAO.class.getResourceAsStream("/dao/dados.properties"));  //dentro de src
 
 				String provedor = dados.getProperty("provedor") ;
 				String sgbd = dados.getProperty("sgbd");
 				String ip = dados.getProperty("ip");
 				String banco = dados.getProperty("banco");
-				String cachemode = dados.getProperty("cachemode");
 
 				logger.info("provedor => "+ provedor);
 				logger.info("sgbd => "+ sgbd);
 				logger.info("ip => "+ ip);
 				logger.info("banco => "+ banco);
-				logger.info("cachemode => "+ cachemode);
 
 				// reconfigurar algumas propriedades do persistence.xml
 				Properties configuracoes = new Properties();
@@ -49,8 +46,7 @@ public class Util {
 					configuracoes.setProperty("jakarta.persistence.jdbc.driver",  "org.postgresql.Driver" );
 					configuracoes.setProperty("jakarta.persistence.jdbc.url", "jdbc:postgresql://"+ip+":5432/"+banco);
 					configuracoes.setProperty("jakarta.persistence.jdbc.user", "postgres");
-					configuracoes.setProperty("jakarta.persistence.jdbc.password", "ifpb");
-					configuracoes.setProperty("jakarta.persistence.sharedCache.mode", cachemode);
+					configuracoes.setProperty("jakarta.persistence.jdbc.password", "postgres");
 					if(provedor.equals("hibernate")) {
 						configuracoes.setProperty("hibernate.dialect",  "org.hibernate.dialect.PostgreSQLDialect" );
 					}
@@ -61,7 +57,6 @@ public class Util {
 					configuracoes.setProperty("jakarta.persistence.jdbc.url", "jdbc:mysql://"+ip+":3306/"+banco+"?createDatabaseIfNotExist=true");
 					configuracoes.setProperty("jakarta.persistence.jdbc.user", "root");
 					configuracoes.setProperty("jakarta.persistence.jdbc.password", "");
-					configuracoes.setProperty("jakarta.persistence.sharedCache.mode", cachemode);
 					if(provedor.equals("hibernate")) {
 						configuracoes.setProperty("hibernate.dialect",  "org.hibernate.dialect.MySQLDialect" );
 					}

@@ -2,18 +2,16 @@ package dao;
 
 import modelo.Jogo;
 
-import java.util.ArrayList;
 import java.util.List;
 import jakarta.persistence.TypedQuery;
 
 public class DAOJogo extends DAO<Jogo> {
-
+    @Override
 	public Jogo read (Object chave){
-
-		int id = (int) chave;
 		try {
-            TypedQuery<Jogo> q = manager.createQuery("select j from Jogo j where j.id=:d", Jogo.class);
-            q.setParameter("d", id);
+            int id = (int) chave;
+            TypedQuery<Jogo> q = manager.createQuery("select j from Jogo j where j.id=:id", Jogo.class);
+            q.setParameter("id", id);
             return q.getSingleResult();
         } catch (Exception e) {
             return null;

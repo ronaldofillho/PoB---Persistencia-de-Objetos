@@ -2,32 +2,41 @@
 package modelo;
 
 import java.util.ArrayList;
+import java.util.List;
 import jakarta.persistence.*;
 @Entity
 public class Jogo {
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
 	private String data;
 	private String local;
 	private int estoque;
 	private double preco;
 
+	@OneToOne
+	private Time time1;
+
+	@OneToOne
+	private Time time2;
+
 	@ManyToMany(cascade= {
 			CascadeType.PERSIST,
 			CascadeType.MERGE
 	})
-	private ArrayList<Time> times = new ArrayList<Time>();
+	private List<Ingresso> ingressos =  new ArrayList<>();
 
-	@ManyToMany(cascade= {
-			CascadeType.PERSIST,
-			CascadeType.MERGE,
-			CascadeType.REMOVE
-	})
-	private ArrayList<Ingresso> ingressos = new ArrayList<>();
 
 	public Jogo(String data, String local, int estoque, double preco) {
 		//id sera gerado pelo banco;
+		this.data = data;
+		this.local = local;
+		this.estoque = estoque;
+		this.preco = preco;
+	}
+	public Jogo(int id, String data, String local, int estoque, double preco) {
+		//id sera gerado pelo banco;
+		this.id = id;
 		this.data = data;
 		this.local = local;
 		this.estoque = estoque;
@@ -91,22 +100,22 @@ public class Jogo {
 	}
 
 	public Time getTime1() {
-		return times.get(0);
+		return time1;
 	}
 
 	public Time getTime2() {
-		return times.get(1);
+		return time2;
 	}
 	
 	public void setTime1(Time time1) {
-		this.times.add(time1);
+		this.time1 = time1;
 	}
 
 	public void setTime2(Time time2) {
-		this.times.add(time2);
+		this.time2 = time2;
 	}
 
-	public ArrayList<Ingresso> getIngressos() {
+	public List<Ingresso> getIngressos() {
 		return ingressos;
 	}
 	public void setIngressos(Ingresso ingresso) {
@@ -123,5 +132,4 @@ public class Jogo {
 			texto += i.getCodigo() + ",";
 		return texto;
 	}
-
 }

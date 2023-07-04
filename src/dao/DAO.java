@@ -29,7 +29,12 @@ public abstract class DAO<T> implements DAOInterface<T> {
 	//----------CRUD-----------------------
 
 	public void create(T obj){
-		manager.persist( obj );
+		try {
+			manager.persist( obj );
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+
 	}
 
 	public abstract T read(Object chave);	//sobrescrito nas subclasses
@@ -49,6 +54,7 @@ public abstract class DAO<T> implements DAOInterface<T> {
 		return query.getResultList();
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<T> readAllPagination(int firstResult, int maxResults) {
 		Class<T> type = (Class<T>) ((ParameterizedType) this.getClass()
 				.getGenericSuperclass()).getActualTypeArguments()[0];
@@ -59,8 +65,8 @@ public abstract class DAO<T> implements DAOInterface<T> {
 				.getResultList();
 	}
 
-	@SuppressWarnings("unchecked")
 	//deletar todos objetos de um tipo (e subtipo)
+	@SuppressWarnings("unchecked")
 	public void deleteAll(){
 		Class<T> type =(Class<T>) ((ParameterizedType) this.getClass()
 				.getGenericSuperclass()).getActualTypeArguments()[0];
@@ -70,7 +76,7 @@ public abstract class DAO<T> implements DAOInterface<T> {
 		query.executeUpdate();
 	}
 
-	//--------transa��o---------------
+	//--------TRANSACAO---------------
 	public static void begin(){
 		if(!manager.getTransaction().isActive())
 			manager.getTransaction().begin();
@@ -108,4 +114,3 @@ public abstract class DAO<T> implements DAOInterface<T> {
 		}
 	}
 }
-

@@ -1,7 +1,9 @@
 
 package modelo;
 
+
 import java.util.ArrayList;
+import java.util.List;
 import jakarta.persistence.*;
 
 @Entity
@@ -10,13 +12,12 @@ public class Time {
 	private String nome;
 	private String origem;
 
-	@ManyToMany(mappedBy="times",
+	@OneToMany (
 		cascade = {
-			CascadeType.PERSIST,
-			CascadeType.MERGE
+			CascadeType.ALL
 		}
 	)
-	private ArrayList<Jogo> jogos = new ArrayList<>();
+	private List<Jogo> jogos = new ArrayList<>();
 	
 	public Time(String nome, String origem) {
 		super();
@@ -57,12 +58,12 @@ public class Time {
 		this.origem = origem;
 	}
 	
-	public int getJogos() {
-		return jogos.size();
+	public List<Jogo> getJogos() {
+		return this.jogos;
 	}
 	
-	public ArrayList<Jogo> getGames() {
-		return this.jogos;
+	public int getNumJogos() {
+		return this.jogos.size();
 	}
 
 	@Override

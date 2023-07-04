@@ -24,7 +24,6 @@ import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
-import modelo.Jogo;
 import modelo.Time;
 import regras_negocio.Fachada;
 
