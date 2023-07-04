@@ -21,7 +21,7 @@ public class Jogo {
 			CascadeType.PERSIST,
 			CascadeType.MERGE
 	})
-	private ArrayList<Time> times = new ArrayList<Time>()
+	private ArrayList<Time> times = new ArrayList<Time>();
 
 	@ManyToMany(cascade= {
 			CascadeType.PERSIST,
@@ -103,11 +103,11 @@ public class Jogo {
 	}
 	
 	public void setTime1(Time time1) {
-		this.times.add(time1)
+		this.times.add(time1);
 	}
 
 	public void setTime2(Time time2) {
-		this.times.add(time2)
+		this.times.add(time2);
 	}
 
 	public ArrayList<Ingresso> getIngressos() {

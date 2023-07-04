@@ -1,65 +1,41 @@
 package dao;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.db4o.query.Query;
-
 import modelo.Jogo;
-import modelo.Time;
+
+import java.util.List;
+import jakarta.persistence.TypedQuery;
 
 public class DAOJogo extends DAO<Jogo> {
 
 	public Jogo read (Object chave){
 
-		int id = (Integer) chave;	//casting para o tipo da chave
-		Query q = manager.query();
-		q.constrain(Jogo.class);
-		q.descend("id").constrain(id);
-		List<Jogo> resultados = q.execute();
-		if (resultados.size()>0)
-			return resultados.get(0);
-		else
-			return null;
+		int id = (int) chave;
+		try {
+            TypedQuery<Jogo> q = manager.createQuery("select j from Jogo j where j.id=:d", Jogo.class);
+            q.setParameter("d", id);
+            return q.getSingleResult();
+        } catch (Exception e) {
+            return null;
+        }
 	}
     
     /* -- Consultas -- */
-    
-    public List<Jogo> listarJogos() {
-    	Query q = manager.query();
-    	q.constrain(Jogo.class);
-    	return q.execute();
+
+    public List<Jogo> listarJogosDeUmaData(String data) {
+        TypedQuery<Jogo> q = manager.createQuery("select j from Jogo j where j.data=:x", Jogo.class);
+        q.setParameter("x", data);
+        return q.getResultList();
     }
 
-    public List<Jogo> buscarPorTime(Time time) {
-        Query q = manager.query();
-        q.constrain(Jogo.class);
-        q.descend("time1").constrain(time).or(q.descend("time2").constrain(time));
-        return q.execute();
+    public List<Jogo> listarJogosDeUmTime(String time) {
+        TypedQuery<Jogo> q = manager.createQuery("select j from Jogo j join j.times t where t.nome=:n", Jogo.class);
+        q.setParameter("n", time);
+        return q.getResultList();
     }
 
-    public List<Jogo> buscarPorData(String data) {
-        Query q = manager.query();
-        q.constrain(Jogo.class);
-        q.descend("data").constrain(data);
-        return q.execute();
+    public List<Jogo> listarJogosComIngressosDisponiveis() {
+        TypedQuery<Jogo> q = manager.createQuery("select j from Jogo j where j.estoque >= 1", Jogo.class);
+        return q.getResultList();
     }
 
-    public List<Jogo> jogosComIngressosEsgotados() throws Exception {
-        DAOJogo daoJogo = new DAOJogo();
-        List<Jogo> jogos = daoJogo.jogosComIngressosEsgotados();
-        if (jogos.isEmpty()) {
-            throw new Exception("Não existem jogos com ingressos esgotados.");
-        }
-        return jogos;
-    }
-    
-    
-    public List<Jogo> jogosDeUmTimeEspecifico(String time) {
-        Query q = manager.query();
-        
-        q.constrain(Jogo.class);
-        q.descend("time1").descend("nome").constrain(time).or(q.descend("time2").descend("nome").constrain(time));
-        return q.execute();
-    }
 }
